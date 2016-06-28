@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Denvit CMS">
+    <serverData>
+      <paths name="Denvit CMS">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="hardblock-task" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="larahelp">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="localhost">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
