@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Job;
 use App\Tag;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class JobController extends Controller
 {
+    public function index(){
+        $jobs = Job::all();
+
+        return view('backend.partials.dashboard')->with('jobs', $jobs);
+    }
+
     public function create()
     {
         return view('backend.partials.jobs.create');
@@ -23,14 +31,14 @@ class JobController extends Controller
             'skills'        => 'required'
         ]);
 
-        $skills = $request->get('skills');
+        /*$skills = $request->get('skills');
 
         $arrSkills = [];
         $arrSkills = explode(',', $skills);
 
         dd($arrSkills);
 
-        /*
+        */
         $location = Input::has('remote') ? true : false;
 
         $job = new Job;
@@ -42,23 +50,56 @@ class JobController extends Controller
         }else{
             $job->location = $request->get('location');
         }
+        $job->token = str_random(20);
         $job->save();
-*/
 
         $tag = new Tag;
         $tag->title = $request->get('skills');
 
-        return redirect('/')->withStatus('success')->withMessage('Job successfully added!');
+        $emailData = [
+            'token'         => route('job.edit', [$job->token]),
+            'title'      => $job->title,
+            'description'   => $job->description
+        ];
+
+        try{
+            Mail::send(
+                'backend.partials.emails.job-added',
+                $emailData,
+                function ($message) use ($job){
+                    $message->to($job->email)
+                        ->from('no-reply@job-board.com')
+                        ->subject('Congratz! Your latest job was successfully added.');
+                }
+            );
+            \Log::info('Message successfully sent!');
+        }catch (\Exception $e){
+            \Log::error($e->getMessage());
+        }
+
+        return redirect('/job')->withStatus('success')->withMessage('Job successfully added!');
     }
 
     public function show($id)
     {
-        //
+        $job = Job::where('id', '=', $id)->first();
+
+        if ($job) {
+            return view('backend.partials.jobs.single')->with('job', $job);
+        }else{
+            return redirect('/job');
+        }
     }
 
-    public function edit($id)
+    public function edit($token)
     {
-        //
+        $job = Job::where('token', '=', $token)->first();
+
+        if($job){
+            return view('backend.partials.jobs.edit')->with('job', $job);
+        }else{
+            return redirect('/job')->withStatus('error')->withMessage('Job with this token was not found :(');
+        }
     }
 
     /**
@@ -70,7 +111,16 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $job = Job::find($id);
+
+        try{
+            $input = $request->except('_token');
+            $job->fill($input)->save();
+
+            return redirect(route('job.index'))->withStatus('success')->withMessage('Job was successfully updated.');
+        }catch(\Exception $e){
+            Log::error($e->getMessage());
+        }
     }
 
     /**
@@ -81,6 +131,8 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Job::destroy($id);
+
+        return redirect('/job')->withStatus('success')->withMessage('Job was successfully deleted.');
     }
 }

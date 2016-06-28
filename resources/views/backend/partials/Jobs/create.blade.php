@@ -2,15 +2,6 @@
 @section('pageTitle', 'Add a new job')
 @section('content')
     <div class="row">
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <form action="{{ route('job.store') }}" method="POST">
             <div class="col-md-6">
                     {{ csrf_field() }}

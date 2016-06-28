@@ -11,7 +11,7 @@
     @yield('partialStyle')
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -20,7 +20,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Job board</a>
+            <a class="navbar-brand" href="{{ route('job.index') }}">Job board</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-right" action="#" method="GET">
@@ -36,13 +36,14 @@
 <div class="jumbotron">
     <div class="container">
         <h1 class="pull-left"><a href="{{ url('/') }}">Job board</a></h1>
-        @if(Request::is('/'))
+        @if(Request::is('job'))
             <a href="{{ url('job/create') }}" class="btn btn-md btn-primary pull-right" style="margin-top: 50px;">Add a new job</a>
         @endif
     </div>
 </div>
 
 <div class="container">
+    @include('backend.partials.errors')
     @yield('content')
 </div>
 @include('scripts')

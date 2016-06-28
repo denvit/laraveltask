@@ -13,7 +13,4 @@ class Job extends Model
     protected $fillable = ['email', 'title', 'description', 'location'];
     protected $dates = ['deleted_at'];
 
-    public function tags(){
-        return $this->hasMany('App\Tag');
-    }
 }

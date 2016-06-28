@@ -1,7 +1,9 @@
 <?php
 
-Route::get('/', function () {
-    return view('backend.partials.dashboard');
-});
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/', function () {
+        return redirect('/job');
+    });
 
-Route::resource('job', 'JobController');
+    Route::resource('job', 'JobController');
+});
