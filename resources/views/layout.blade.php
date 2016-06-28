@@ -23,9 +23,9 @@
             <a class="navbar-brand" href="{{ route('job.index') }}">Job board</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right" action="#" method="GET">
+            <form class="navbar-form navbar-right" action="{{ url('/search') }}" method="GET">
                 <div class="form-group">
-                    <input type="text" name="search" placeholder="Search for jobs" class="form-control">
+                    <input type="text" name="query" placeholder="Search for jobs" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-success">Search</button>
             </form>
