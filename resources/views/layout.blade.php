@@ -11,34 +11,26 @@
     @yield('partialStyle')
 </head>
 <body>
-<nav class="navbar">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ route('job.index') }}">Job board</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right" action="{{ url('/search') }}" method="GET">
-                <div class="form-group">
-                    <input type="text" name="query" placeholder="Search for jobs" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Search</button>
-            </form>
-        </div>
-    </div>
-</nav>
-
 <div class="jumbotron">
     <div class="container">
-        <h1 class="pull-left"><a href="{{ url('/') }}">Job board</a></h1>
-        @if(Request::is('job'))
-            <a href="{{ url('job/create') }}" class="btn btn-md btn-primary pull-right" style="margin-top: 50px;">Add a new job</a>
-        @endif
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="pull-left"><a href="{{ url('/') }}">Job board</a></h1>
+            </div>
+            <div class="col-md-6">
+                <form class="navbar-form navbar-right" action="{{ url('/search') }}" method="GET" style="margin-top: 30px;">
+                    <div class="form-group">
+                        <input type="text" name="query" placeholder="Search for jobs" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-12 text-center">
+            @if(Request::is('job'))
+                <a href="{{ url('job/create') }}" class="btn btn-md btn-primary pull-right" >Add a new job</a>
+            @endif
+        </div>
     </div>
 </div>
 

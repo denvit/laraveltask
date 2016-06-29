@@ -6,9 +6,9 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style="margin-bottom: 40px;">
                 @foreach($searchResults as $result)
-                    <div class="col-md-4">
+                <div class="col-md-4">
                         <div class="ui card">
                             <div class="image">
                                 <img src="http://semantic-ui.com/images/wireframe/image-text.png">
