@@ -31,30 +31,38 @@ class JobController extends Controller
             'skills'        => 'required'
         ]);
 
-        /*$skills = $request->get('skills');
+        try{
+            $skills = $request->get('skills');
+            $arrSkills = [];
+            $arrSkills = explode(',', $skills);
 
-        $arrSkills = [];
-        $arrSkills = explode(',', $skills);
+            $tagIds = [];
+            foreach($arrSkills as $index => $value){
+                $tag = new Tag;
+                $tag->title = $value;
+                $tag->save();
 
-        dd($arrSkills);
+                $tagIds[] = $tag->id;
+            }
 
-        */
-        $location = Input::has('remote') ? true : false;
+            $location = Input::has('remote') ? true : false;
 
-        $job = new Job;
-        $job->email = $request->get('email');
-        $job->title = $request->get('title');
-        $job->description = $request->get('description');
-        if($location == true){
-            $job->location = 'remote';
-        }else{
-            $job->location = $request->get('location');
+            $job = new Job;
+            $job->email = $request->get('email');
+            $job->title = $request->get('title');
+            $job->description = $request->get('description');
+            if($location == true){
+                $job->location = 'remote';
+            }else{
+                $job->location = $request->get('location');
+            }
+            $job->token = str_random(20);
+            $job->save();
+
+            $job->tags()->sync($tagIds);
+        }catch(\Exception $e){
+            \Log::error($e->getMessage());
         }
-        $job->token = str_random(20);
-        $job->save();
-
-        $tag = new Tag;
-        $tag->title = $request->get('skills');
 
         $emailData = [
             'token'         => route('job.edit', [$job->token]),

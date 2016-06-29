@@ -13,4 +13,12 @@ class Job extends Model
     protected $fillable = ['email', 'title', 'description', 'location'];
     protected $dates = ['deleted_at'];
 
+    /**
+     * Get the tags associated with job.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags(){
+        return $this->belongsToMany('App\Tag');
+    }
 }

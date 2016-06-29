@@ -10,4 +10,12 @@ class Tag extends Model
 
     protected $fillable = ['title'];
 
+    /**
+     * Get the jobs associated with given tag.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function jobs(){
+        return $this->belongsToMany('App\Job');
+    }
 }

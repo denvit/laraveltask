@@ -14,10 +14,11 @@ class SearchController extends Controller
     public function findJob(){
         $keyword = Input::get('query');
 
-        //$results = Job::where('title', 'LIKE', '%$results%')->get();
-
         $results = DB::table('jobs')
-            ->where('title', 'LIKE', "%$keyword%")
+            ->select('jobs.title', 'jobs.description', 'jobs.location', 'jobs.created_at', 'jobs.email', 'jobs.id')
+            ->join('job_tag', 'jobs.id', '=', 'job_tag.job_id')
+            ->join('tags', 'job_tag.tag_id', '=', 'tags.id')
+            ->where('tags.title', 'LIKE', "%$keyword%")
             ->where('deleted_at', '=', null)
             ->get();
 

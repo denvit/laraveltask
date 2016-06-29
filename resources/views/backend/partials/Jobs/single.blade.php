@@ -21,9 +21,9 @@
                     <p>{{ $job->description }}</p>
                 </div>
                 <div class="extra">
-                    <div class="ui label">PHP</div>
-                    <div class="ui label">MySQL</div>
-                    <div class="ui label">Amazon Web Services</div>
+                    @foreach($job->tags as $tag)
+                        <div class="ui label">{{ $tag->title }}</div>
+                    @endforeach
                 </div>
             </div>
         </div>
