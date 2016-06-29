@@ -148,7 +148,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Torann\GeoIP\GeoIPServiceProvider::class,
 
         /*
          * Application Service Providers...
