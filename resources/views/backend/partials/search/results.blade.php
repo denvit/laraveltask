@@ -7,30 +7,35 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 40px;">
-                @foreach($searchResults as $result)
-                <div class="col-md-4">
-                        <div class="ui card">
-                            <div class="image">
-                                <img src="http://semantic-ui.com/images/wireframe/image-text.png">
-                            </div>
-                            <div class="content">
-                                <a class="header">{{ $result->title }}</a>
-                                <div class="meta">
-                                    <span class="date">Created {{  \Carbon\Carbon::createFromTimeStamp(strtotime($result->created_at))->diffForHumans() }}</span>
+
+                @if(! empty($searchResults))
+                    @foreach($searchResults as $result)
+                    <div class="col-md-4">
+                            <div class="ui card">
+                                <div class="image">
+                                    <img src="http://semantic-ui.com/images/wireframe/image-text.png">
                                 </div>
-                                <div class="description">
-                                    {{ $result->description }}
+                                <div class="content">
+                                    <a class="header">{{ $result->title }}</a>
+                                    <div class="meta">
+                                        <span class="date">Created {{  \Carbon\Carbon::createFromTimeStamp(strtotime($result->created_at))->diffForHumans() }}</span>
+                                    </div>
+                                    <div class="description">
+                                        {{ $result->description }}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="extra content">
-                                <a>
-                                    <i class="marker icon"></i>
-                                    {{ $result->location }}
-                                </a>
+                                <div class="extra content">
+                                    <a>
+                                        <i class="marker icon"></i>
+                                        {{ $result->location }}
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                    @else
+                    <h2>There is no search results for keyword: {{ $keyword }}</h2>
+                @endif
             </div>
         </div>
     </div>

@@ -22,6 +22,10 @@ class SearchController extends Controller
             ->where('deleted_at', '=', null)
             ->get();
 
-        return view('backend.partials.search.results')->with('searchResults', $results)->with('keyword', $keyword);
+        if($results){
+            return view('backend.partials.search.results')->with('searchResults', $results)->with('keyword', $keyword);
+        }else{
+            return view('backend.partials.search.results')->with('keyword', $keyword);
+        }
     }
 }

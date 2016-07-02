@@ -20,7 +20,7 @@
             <div class="col-md-6">
                 <form class="navbar-form navbar-right" action="{{ url('/search') }}" method="GET" style="margin-top: 30px;">
                     <div class="form-group">
-                        <input type="text" name="query" placeholder="Search for jobs" class="form-control">
+                        <input type="text" name="query" placeholder="Search for jobs" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-success">Search</button>
                 </form>
